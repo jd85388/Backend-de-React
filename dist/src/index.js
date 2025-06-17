@@ -1,16 +1,21 @@
-import sql from 'mssql';
-import express from 'express';
-import cors from 'cors';
-import { dbConfig } from './config/config';
-const app = express();
-app.use(cors());
-app.use(express.json());
-sql.connect(dbConfig)
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const mssql_1 = __importDefault(require("mssql"));
+const express_1 = __importDefault(require("express"));
+const cors_1 = __importDefault(require("cors"));
+const config_1 = require("./config/config");
+const app = (0, express_1.default)();
+app.use((0, cors_1.default)());
+app.use(express_1.default.json());
+mssql_1.default.connect(config_1.dbConfig)
     .then(() => console.log('conexion exitosa con AZURE'))
     .catch(Error => console.log('Hubo un error al conectar con AZURE:', Error));
 app.get('/Usuarios', async (req, res) => {
     try {
-        const result = await sql.query `SELECT * FROM Usuarios`;
+        const result = await mssql_1.default.query `SELECT * FROM Usuarios`;
         res.json(result.recordset);
     }
     catch (error) {

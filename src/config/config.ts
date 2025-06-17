@@ -5,7 +5,7 @@ export const dbConfig:  SqlConfig = {
     password: 'lifeReminder001',
     server: "lifereminderpruebas.database.windows.net",
     database: 'Life_Reminder',
-    option: {
+    options: {
         encrypt: true,
         enableArithAbort: true
     }
