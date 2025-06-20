@@ -1,4 +1,5 @@
 import sql from 'mssql';
+import bcrypt from 'bcrypt';
 import { dbConfig } from '../config/config';
 
 export const loginUsuarioService = async (correo: string, password: string) => {
@@ -6,25 +7,35 @@ export const loginUsuarioService = async (correo: string, password: string) => {
         const pool = await sql.connect(dbConfig);
         const result = await pool.request()
             .input('correo', sql.VarChar, correo)
-            .input('password', sql.VarChar, passowrd)
-            .query('SELECT * FROM Usuario WHERE correo = @correo AND password = @password');
+            .input('password', sql.VarChar, password)
+            .query('SELECT * FROM paciente WHERE correo = @correo');
+        const usuario = result.recordset[0];
 
-        return result.recordset[0];    
+    if (!usuario) {
+        return null;
+    }
+
+    const match = await bcrypt.compare(password, usuario.password);
+        if (!match) {
+            return null;
+        }   
+        return usuario;
     } catch (error) {
         throw error;
     }
 };
 
-export const registrarUsuarioService = async (nombre: string, apellido: string, rh: string, telefono: number, correo: string, contraseña: string ) => {
+export const registrarUsuarioService = async (nombre: string, apellido: string, rh: string, telefono: number, correo: string, password: string ) => {
     try {
         const pool = await sql.connect(dbConfig);
+        const hashedPassword = await bcrypt.hash(password, 10);
         const result = await pool.request()
             .input('nombre', sql.VarChar, nombre)
             .input('apellido', sql.VarChar, apellido)
             .input('rh', sql.VarChar, rh)
-            .input('telefono' sql.BegInt, telefono)
+            .input('telefono', sql.BigInt, telefono)
             .input('correo', sql.VarChar, correo)
-            .input('password', sql.VarChart, passowrd)
+            .input('password', sql.VarChar, hashedPassword)
             .query('INSERT INTO Paciente (nombre, apellido, rh, telefono, correo, password) VALUES (@nombre, @apellido, @rh, @telefono, @correo, @password)');
             
             return result;

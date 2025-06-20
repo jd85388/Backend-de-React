@@ -21,6 +21,7 @@
     "mysql2": "^3.14.1"
   },
   "devDependencies": {
+    "@types/bcrypt": "^5.0.2",
     "@types/cors": "^2.8.19",
     "@types/mssql": "^9.1.7",
     "ts-node": "^10.9.2"

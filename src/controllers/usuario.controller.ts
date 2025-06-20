@@ -1,5 +1,5 @@
 import { Request, Response} from 'express';
-import { loginUsuarioService, registrarUsuarioService } from '../services/usuario.service.ts';
+import { loginUsuarioService, registrarUsuarioService } from '../services/usuario.services';
 
 export const loginUsuario  = async (req: Request, res: Response) => {
     try{
@@ -28,7 +28,7 @@ export const registrarUsuario = async (req: Request, res: Response) => {
          }
 
          const resultado = await registrarUsuarioService(nombre, apellido, rh, telefono, correo, password);
-         res.status(201.json({message: "El usuario fue registrado"}, data: resultado));
+         res.status(201).json({message: "El usuario fue registrado",data: resultado});
     } catch (error) {
         res.status(500).json({message: "Perdimos la conexion con el servidor", error: (error as Error).message});
     }
