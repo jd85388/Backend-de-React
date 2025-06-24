@@ -11,7 +11,7 @@ sql.connect(dbConfig)
     .then(() => console.log('conexion exitosa con AZURE'))
     .catch(Error => console.log('Hubo un error al conectar con AZURE:', Error));
 
-app.post('/api/paciente', Rutas);
+app.use('/api', Rutas);
     app.listen(3000, () => {
         console.log(`Servidor corriendo en http://localhost:3000`);
         

@@ -25,7 +25,7 @@ export const loginUsuarioService = async (correo: string, password: string) => {
     }
 };
 
-export const registrarUsuarioService = async (nombre: string, apellido: string, rh: string, telefono: number, correo: string, password: string ) => {
+export const registrarUsuarioService = async (nombre: string, apellido: string, rh: string, fechaNacimiento: Date, telefono: number, correo: string, password: string ) => {
     try {
         const pool = await sql.connect(dbConfig);
         const hashedPassword = await bcrypt.hash(password, 10);
@@ -33,10 +33,11 @@ export const registrarUsuarioService = async (nombre: string, apellido: string, 
             .input('nombre', sql.VarChar, nombre)
             .input('apellido', sql.VarChar, apellido)
             .input('rh', sql.VarChar, rh)
+            .input('fechaNacimiento', sql.Date, fechaNacimiento)
             .input('telefono', sql.BigInt, telefono)
             .input('correo', sql.VarChar, correo)
             .input('password', sql.VarChar, hashedPassword)
-            .query('INSERT INTO Paciente (nombre, apellido, rh, telefono, correo, password) VALUES (@nombre, @apellido, @rh, @telefono, @correo, @password)');
+            .query('INSERT INTO Paciente (nombre, apellido, rh, fechaNacimiento, telefono, correo, password) VALUES (@nombre, @apellido, @rh, @fechaNacimiento, @telefono, @correo, @password)');
             
             return result;
         } catch (error) {
