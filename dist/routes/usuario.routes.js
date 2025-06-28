@@ -2,7 +2,10 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const usuario_controller_1 = require("../controllers/usuario.controller");
+const registros_controller_1 = require("../controllers/registros.controller");
 const Rutas = (0, express_1.Router)();
 Rutas.post('/login', usuario_controller_1.loginUsuario);
 Rutas.post('/registro', usuario_controller_1.registrarUsuario);
+//Rutas.post('/medicamento', registroMedicamento);
+Rutas.post('/citas', registros_controller_1.registroCitas);
 exports.default = Rutas;
