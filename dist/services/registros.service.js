@@ -22,7 +22,7 @@ const registrarCitaService = async (idPaciente, clinica, lugar, consultorio, esp
             .query('INSERT INTO CitaMedica (idPaciente, clinica, lugar, consultorio, especialidad, fecha) VALUES (@idPaciente, @clinica, @lugar, @consultorio, @especialidad, @fecha)');
     }
     catch (error) {
-        throw new Error("No pudimos conectar con el servidor, vuelve a intentar mas tarde");
+        throw error;
     }
 };
 exports.registrarCitaService = registrarCitaService;

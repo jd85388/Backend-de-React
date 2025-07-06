@@ -9,7 +9,7 @@ const registroCitas = async (req, res) => {
         res.status(201).json({ message: "Se registro la cita con exito" });
     }
     catch (error) {
-        return res.status(500).json({ message: `Perdimos conexion con la base de datos, porfavor verifica tu conexion a internet. Detalle: ${error.message}` });
+        throw error;
     }
 };
 exports.registroCitas = registroCitas;

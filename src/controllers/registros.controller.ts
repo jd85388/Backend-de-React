@@ -13,7 +13,7 @@ export const registroCitas = async( req: Request, res: Response ) => {
 
         const resultado = await registrarCitaService(id_paciente, clinica, lugar, consultorio, especialidad, fecha);
             res.status(201).json({message:"Se registro la cita con exito"});       
-        }catch (error : any){         
+        }catch (error){         
             throw error;
         }
     }
